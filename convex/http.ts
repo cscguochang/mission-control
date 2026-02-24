@@ -1,5 +1,6 @@
 import { httpRouter } from "convex/server";
 import { httpAction } from "./_generated/server";
+import { api } from "./_generated/api";
 
 const http = httpRouter();
 
@@ -40,7 +41,7 @@ http.route({
       });
     }
 
-    const id = await ctx.runMutation("agentRuns:create", {
+    const id = await ctx.runMutation(api.agentRuns.create, {
       kind: parsed.kind,
       role: parsed.role,
       title: parsed.title,
@@ -52,7 +53,7 @@ http.route({
     });
 
     if (parsed.output || parsed.error) {
-      await ctx.runMutation("agentRuns:update", {
+      await ctx.runMutation(api.agentRuns.update, {
         id,
         status: parsed.status,
         output: parsed.output,
